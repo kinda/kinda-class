@@ -1,0 +1,12 @@
+{
+  "name": "kinda",
+  "version": "0.1.0",
+  "description": "Base class constructor",
+  "author": "Manuel Vila <mvila@3base.com>",
+  "main": "index.js",
+  "repository": "git://github.com/kinda/kinda",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
+}
