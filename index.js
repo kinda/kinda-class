@@ -8,6 +8,8 @@ var Kinda = {
   constructor: function() {},
 
   extend: function(name, constructor) {
+    if (typeof name !== 'string' || !name)
+      throw new Error('class name is required');
     var parent = this;
     var child = {};
     for (var key in parent) {
@@ -34,7 +36,6 @@ var Kinda = {
       },
       include: function(other) {
         if (includedClasses.indexOf(other) !== -1) return;
-        // console.log(other.name + ' included');
         includedClasses.push(other);
         other.constructor.call(this);
         return this;
@@ -42,10 +43,7 @@ var Kinda = {
       isInstanceOf: function(klass) {
         return klass === currentClass ||
           includedClasses.indexOf(klass) !== -1;
-      }//,
-      // inspect: function() {
-      //   return this.toJSON ? util.inspect(this.toJSON()) : this;
-      // }
+      }
     };
     this.constructor.call(prototype);
     return prototype;
@@ -58,11 +56,8 @@ var Kinda = {
     return this._prototype;
   },
 
-  create: function() {
-    var instance = Object.create(this.getPrototype());
-    if (instance.init)
-      instance.init.apply(instance, arguments);
-    return instance;
+  instantiate: function() {
+    return Object.create(this.getPrototype());
   },
 
   isKindaClass: function() { return true; }
