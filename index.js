@@ -1,9 +1,7 @@
 "use strict";
 
-var util = require('util');
-
-var Kinda = {
-  name: 'Kinda',
+var KindaClass = {
+  name: 'KindaClass',
 
   constructor: function() {},
 
@@ -63,4 +61,4 @@ var Kinda = {
   isKindaClass: function() { return true; }
 }
 
-module.exports = Kinda;
+module.exports = KindaClass;
