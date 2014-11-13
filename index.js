@@ -5,6 +5,11 @@ var KindaClass = {
 
   constructor: function() {},
 
+  /**
+   * Create a subclass.
+   * @param {string} name - The name of the subclass to create.
+   * @param {function} constructor - The code to run to define the subclass.
+   */
   extend: function(name, constructor) {
     if (typeof name !== 'string' || !name)
       throw new Error('class name is required');
@@ -26,18 +31,31 @@ var KindaClass = {
     var currentClass = this;
     var includedClasses = [];
     var prototype = {
+      /**
+       * ...
+       */
       getClass: function() {
         return currentClass;
       },
+      /**
+       * ...
+       */
       getPrototype: function() {
         return prototype;
       },
+      /**
+       * Include an other class (mixin).
+       * @param {object} other - The class to include.
+       */
       include: function(other) {
         if (includedClasses.indexOf(other) !== -1) return;
         includedClasses.push(other);
         other.constructor.call(this);
         return this;
       },
+      /**
+       * ...
+       */
       isInstanceOf: function(klass) {
         return klass === currentClass ||
           includedClasses.indexOf(klass) !== -1;
@@ -47,6 +65,9 @@ var KindaClass = {
     return prototype;
   },
 
+  /**
+   * ...
+   */
   getPrototype: function() {
     if (!this._prototype) {
       this._prototype = this.constructPrototype();
@@ -54,10 +75,16 @@ var KindaClass = {
     return this._prototype;
   },
 
+  /**
+   * ...
+   */
   instantiate: function() {
     return Object.create(this.getPrototype());
   },
 
+  /**
+   * ...
+   */
   isKindaClass: function() { return true; }
 }
 
