@@ -47,7 +47,9 @@ suite('KindaClass', function() {
   });
 
   test('getPrototype', function() {
-    // TODO
+    var foo = Foo.instantiate();
+    var bar = Bar.instantiate();
+    assert.equal(foo.getPrototype(), bar.getPrototype());
   });
 
   test('instantiate', function() {
