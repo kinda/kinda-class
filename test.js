@@ -37,7 +37,8 @@ suite('KindaClass', function() {
     });
 
     test('getPrototype', function() {
-      // TODO
+      var bar = Bar.instantiate();
+      assert.equal(Bar.getPrototype().isCold(), bar.isCold(), 'isCode() on instance should be equal to call on class');
     });
 
     test('isInstanceOf', function() {
@@ -47,9 +48,8 @@ suite('KindaClass', function() {
   });
 
   test('getPrototype', function() {
-    var foo = Foo.instantiate();
     var bar = Bar.instantiate();
-    assert.equal(foo.getPrototype(), bar.getPrototype());
+    assert.equal(Bar.getPrototype().isCold(), bar.isCold(), 'isCode() on instance should be equal to call on class');
   });
 
   test('instantiate', function() {
