@@ -27,22 +27,28 @@ var KindaClass = {
     return child;
   },
 
+  /**
+  * Function for construct the prototype
+  */
   constructPrototype: function() {
     var currentClass = this;
     var includedClasses = [];
     var prototype = {
+
       /**
-       * ...
+       * Get reference of class
        */
       getClass: function() {
         return currentClass;
       },
+
       /**
-       * ...
+       * Get construct prototype object of class
        */
       getPrototype: function() {
         return prototype;
       },
+
       /**
        * Include an other class (mixin).
        * @param {object} other - The class to include.
@@ -53,20 +59,23 @@ var KindaClass = {
         other.constructor.call(this);
         return this;
       },
+
       /**
-       * ...
+       * Check if klass is a subclass
+       * @param {object} klass - the klass object for check
        */
       isInstanceOf: function(klass) {
         return klass === currentClass ||
           includedClasses.indexOf(klass) !== -1;
       }
     };
+
     this.constructor.call(prototype);
     return prototype;
   },
 
   /**
-   * ...
+   * Function for get the construct prototype of class
    */
   getPrototype: function() {
     if (!this._prototype) {
@@ -76,14 +85,14 @@ var KindaClass = {
   },
 
   /**
-   * ...
+   * create an instance from prototype object
    */
   instantiate: function() {
     return Object.create(this.getPrototype());
   },
 
   /**
-   * ...
+   * flag this is KindaClass object
    */
   isKindaClass: function() { return true; }
 }
