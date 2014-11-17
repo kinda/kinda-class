@@ -15,6 +15,7 @@ var KindaClass = {
       throw new Error('class name is required');
     var parent = this;
     var child = {};
+    // Copy class properties
     for (var key in parent) {
       if (key.substr(0, 1) !== '_' && parent.hasOwnProperty(key))
           child[key] = parent[key];
@@ -28,30 +29,30 @@ var KindaClass = {
   },
 
   /**
-  * Function for construct the prototype
+  * Construct the prototype.
+  * @private
   */
   constructPrototype: function() {
     var currentClass = this;
     var includedClasses = [];
     var prototype = {
-
       /**
-       * Get reference of class
+       * Get the class
        */
       getClass: function() {
         return currentClass;
       },
 
       /**
-       * Get construct prototype object of class
+       * Get the prototype.
        */
       getPrototype: function() {
         return prototype;
       },
 
       /**
-       * Include an other class (mixin).
-       * @param {object} other - The class to include.
+       * Include another class (mixin).
+       * @param {Object} other - The class to include.
        */
       include: function(other) {
         if (includedClasses.indexOf(other) !== -1) return;
@@ -61,8 +62,8 @@ var KindaClass = {
       },
 
       /**
-       * Check if klass is a subclass
-       * @param {object} klass - the klass object for check
+       * Check if something is an instance of a class.
+       * @param {Object} klass - a class.
        */
       isInstanceOf: function(klass) {
         return klass === currentClass ||
@@ -75,7 +76,7 @@ var KindaClass = {
   },
 
   /**
-   * Function for get the construct prototype of class
+   * Get (or create if it doesn't exist) the prototype of a class.
    */
   getPrototype: function() {
     if (!this._prototype) {
@@ -85,14 +86,14 @@ var KindaClass = {
   },
 
   /**
-   * create an instance from prototype object
+   * Create an instance.
    */
   instantiate: function() {
     return Object.create(this.getPrototype());
   },
 
   /**
-   * flag this is KindaClass object
+   * A way to test if something is a KindaClass.
    */
   isKindaClass: function() { return true; }
 }
