@@ -1,17 +1,14 @@
 {
   "name": "kinda-class",
-  "version": "0.1.4",
-  "description": "Base class constructor",
+  "version": "0.1.5",
+  "description": "Simple and powerful dynamic object system",
   "author": "Manuel Vila <mvila@3base.com>",
   "main": "index.js",
   "repository": "git://github.com/kinda/kinda-class",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --ui tdd --watch"
+    "test": "./node_modules/.bin/mocha --ui tdd"
   },
   "license": "MIT",
-  "engines": {
-    "node": "0.11.x"
-  },
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.0.1"

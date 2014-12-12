@@ -15,7 +15,7 @@ var KindaClass = {
       throw new Error('class name is required');
     var parent = this;
     var child = {};
-    // Copy class properties
+    // copy class properties
     for (var key in parent) {
       if (key.substr(0, 1) !== '_' && parent.hasOwnProperty(key))
           child[key] = parent[key];
