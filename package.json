@@ -1,6 +1,6 @@
 {
   "name": "kinda-class",
-  "version": "0.1.16",
+  "version": "0.2.0",
   "description": "Simple and powerful dynamic object system",
   "author": "Manuel Vila <mvila@3base.com>",
   "main": "index.js",
