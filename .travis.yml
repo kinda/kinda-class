@@ -1,7 +1,6 @@
 language: node_js
 node_js:
 - '0.11'
-sudo: false
 branches:
   only:
   - master
@@ -17,3 +16,4 @@ notifications:
   email: false
   slack:
     secure: GRH2EgxcxM/LEOEeBnofllzXoHTttN0ZN4dSEdH5g18XA6efcFuGRmaUXbzViTB+U9e0e+3O2t2rKRyrlYsDgni9Mm/Za6+JOaoiGxhSwAFDiPwUKXQCgUrskhRxEMJdTwtp6bTRfkJGNUt0DTWdp2xFq3JLIs69m+lIyWwDqXY=
+sudo: false
