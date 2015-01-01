@@ -37,7 +37,7 @@ var KindaClass = {
     var includedClasses = [];
     var prototype = {
       /**
-       * Get the class
+       * Get the class.
        */
       getClass: function() {
         return currentClass;
