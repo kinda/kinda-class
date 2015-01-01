@@ -24,7 +24,7 @@ suite('KindaClass', function() {
 
     suite('Class methods', function() {
       test('extend', function() {
-        assert.equal(Bar.hello, 'Hello');
+        assert.equal(Bar.hello, 'Helloo');
         assert.isUndefined(Bar._bye);
       });
 
