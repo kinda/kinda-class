@@ -2,8 +2,6 @@
 
 Simple and powerful dynamic object system.
 
-## Documentation
-
 ```js
-// TODO
+// TODO: documentation!
 ```
