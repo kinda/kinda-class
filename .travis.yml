@@ -1,4 +1,10 @@
 language: node_js
 node_js:
-  - "0.11"
+- '0.11'
 sudo: false
+deploy:
+  provider: npm
+  api_key:
+    secure: k2UROr7uWIys6i3oCLqMh8jnUIlYwkf+40abUwZvTu7V7EZhkp1sI0aQFpUO98BUIH2WPDKJi1hV6nVhFk5SMUstunCVyBS/EcKQab1zHpJUc92IfbaVejPg44rIcmnqlXvst2xx5k8mJUtyMQk5D8zBKLxSzyprnORGbLxyWlw=
+  on:
+    tags: true
