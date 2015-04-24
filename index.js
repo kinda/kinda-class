@@ -34,7 +34,7 @@ var KindaClass = {
   */
   constructPrototype: function() {
     var currentClass = this;
-    var includedClasses = [];
+    var superclasses = [];
     var prototype = {
       /**
        * Get the class.
@@ -51,6 +51,22 @@ var KindaClass = {
       },
 
       /**
+       * Get superclasses.
+       */
+      getSuperclasses: function() {
+        return superclasses;
+      },
+
+      /**
+       * Get superclass names.
+       */
+      getSuperclassNames: function() {
+        return superclasses.map(function(superclass) {
+          return superclass.getName();
+        });
+      },
+
+      /**
        * Get the prototype.
        */
       getPrototype: function() {
@@ -62,8 +78,8 @@ var KindaClass = {
        * @param {Object} other - The class to include.
        */
       include: function(other) {
-        if (includedClasses.indexOf(other) !== -1) return;
-        includedClasses.push(other);
+        if (superclasses.indexOf(other) !== -1) return;
+        superclasses.push(other);
         other.constructor.call(this);
         return this;
       },
@@ -74,7 +90,7 @@ var KindaClass = {
        */
       isInstanceOf: function(klass) {
         return klass === currentClass ||
-          includedClasses.indexOf(klass) !== -1;
+        superclasses.indexOf(klass) !== -1;
       }
     };
 

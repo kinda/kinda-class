@@ -23,10 +23,6 @@ suite('KindaClass', function() {
     });
 
     suite('Class methods', function() {
-      test('getName', function() {
-        assert.strictEqual(Foo.getName(), 'Foo');
-      });
-
       test('extend', function() {
         assert.strictEqual(Bar.hello, 'Hello');
         assert.isUndefined(Bar._bye);
@@ -36,6 +32,10 @@ suite('KindaClass', function() {
         var bar = Bar.instantiate();
         assert.strictEqual(bar.cool, 'very');
         assert.isFunction(bar.isCold);
+      });
+
+      test('getName', function() {
+        assert.strictEqual(Foo.getName(), 'Foo');
       });
 
       test('getPrototype', function() {
@@ -63,6 +63,20 @@ suite('KindaClass', function() {
       test('getClassName', function() {
         var foo = Foo.instantiate();
         assert.strictEqual(foo.getClassName(), 'Foo');
+      });
+
+      test('getSuperclasses', function() {
+        var foo = Foo.instantiate();
+        assert.deepEqual(foo.getSuperclasses(), [KindaClass]);
+        var bar = Bar.instantiate();
+        assert.deepEqual(bar.getSuperclasses(), [Foo, KindaClass]);
+        var baz = Baz.instantiate();
+        assert.deepEqual(baz.getSuperclasses(), [KindaClass, Bar, Foo]);
+      });
+
+      test('getSuperclassNames', function() {
+        var baz = Baz.instantiate();
+        assert.deepEqual(baz.getSuperclassNames(), ['KindaClass', 'Bar', 'Foo']);
       });
 
       test('getPrototype', function() {
