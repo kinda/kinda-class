@@ -1,7 +1,7 @@
 "use strict";
 
 var KindaClass = {
-  name: 'KindaClass',
+  _name: 'KindaClass',
 
   constructor: function() {},
 
@@ -20,7 +20,7 @@ var KindaClass = {
       if (key.substr(0, 1) !== '_' && parent.hasOwnProperty(key))
           child[key] = parent[key];
     }
-    child.name = name;
+    child._name = name;
     child.constructor = function() {
       this.include(parent);
       if (constructor) constructor.call(this);
@@ -41,6 +41,13 @@ var KindaClass = {
        */
       getClass: function() {
         return currentClass;
+      },
+
+      /**
+       * Get the name of the class.
+       */
+      getClassName: function() {
+        return this.getClass().getName();
       },
 
       /**
@@ -73,6 +80,13 @@ var KindaClass = {
 
     this.constructor.call(prototype);
     return prototype;
+  },
+
+  /**
+   * Get the name of the class.
+   */
+  getName: function() {
+    return this._name;
   },
 
   /**
