@@ -1,131 +1,84 @@
-"use strict";
-
-var KindaClass = {
+let KindaClass = {
   _name: 'KindaClass',
 
-  constructor: function() {},
+  constructor() {},
 
-  /**
-   * Create a subclass.
-   * @param {string} name - The name of the subclass to create.
-   * @param {function} constructor - The code to run to define the subclass.
-   */
-  extend: function(name, constructor) {
-    if (typeof name !== 'string' || !name)
+  extend(name, constructor) {
+    if (typeof name !== 'string' || !name) {
       throw new Error('class name is required');
-    var parent = this;
-    var child = {};
-    // copy class properties
-    for (var key in parent) {
-      if (key.substr(0, 1) !== '_' && parent.hasOwnProperty(key))
-          child[key] = parent[key];
     }
+
+    let parent = this;
+    let child = {};
+
+    // Copy class properties
+    let keys = Object.getOwnPropertyNames(parent);
+    for (let key of keys) {
+      if (key.startsWith('_')) continue; // Don't copy property starting with a '_'
+      let descriptor = Object.getOwnPropertyDescriptor(parent, key);
+      Object.defineProperty(child, key, descriptor);
+    }
+
     child._name = name;
+
     child.constructor = function() {
       this.include(parent);
       if (constructor) constructor.call(this);
     }
+
     return child;
   },
 
-  /**
-  * Construct the prototype.
-  * @private
-  */
-  constructPrototype: function() {
-    var currentClass = this;
-    var superclasses = [];
-    var prototype = {
-      /**
-       * Get the class.
-       */
-      getClass: function() {
-        return currentClass;
-      },
-
-      /**
-       * Get the name of the class.
-       */
-      getClassName: function() {
-        return this.getClass().getName();
-      },
-
-      /**
-       * Get superclasses.
-       */
-      getSuperclasses: function() {
-        return superclasses;
-      },
-
-      /**
-       * Get superclass names.
-       */
-      getSuperclassNames: function() {
-        return superclasses.map(function(superclass) {
-          return superclass.getName();
-        });
-      },
-
-      /**
-       * Get the prototype.
-       */
-      getPrototype: function() {
-        return prototype;
-      },
-
-      /**
-       * Include another class (mixin).
-       * @param {Object} other - The class to include.
-       */
-      include: function(other) {
-        if (superclasses.indexOf(other) !== -1) return;
-        superclasses.push(other);
-        other.constructor.call(this);
-        return this;
-      },
-
-      /**
-       * Check if something is an instance of a class.
-       * @param {Object} klass - a class.
-       */
-      isInstanceOf: function(klass) {
-        return klass === currentClass ||
-        superclasses.indexOf(klass) !== -1;
-      }
-    };
-
-    this.constructor.call(prototype);
-    return prototype;
-  },
-
-  /**
-   * Get the name of the class.
-   */
-  getName: function() {
+  get name() {
     return this._name;
   },
 
-  /**
-   * Get (or create if it doesn't exist) the prototype of a class.
-   */
-  getPrototype: function() {
+  get prototype() {
     if (!this._prototype) {
       this._prototype = this.constructPrototype();
     }
     return this._prototype;
   },
 
-  /**
-   * Create an instance.
-   */
-  instantiate: function() {
-    return Object.create(this.getPrototype());
+  instantiate() {
+    return Object.create(this.prototype);
   },
 
-  /**
-   * A way to test if something is a KindaClass.
-   */
-  isKindaClass: function() { return true; }
-}
+  isKindaClass: true,
+
+  constructPrototype() {
+    let currentClass = this;
+    let superclasses = [];
+
+    let prototype = {
+      get class() {
+        return currentClass;
+      },
+
+      get superclasses() {
+        return superclasses;
+      },
+
+      get prototype() {
+        return prototype;
+      },
+
+      include(other) {
+        if (superclasses.indexOf(other) !== -1) return;
+        superclasses.push(other);
+        other.constructor.call(this);
+        return this;
+      },
+
+      isInstanceOf(klass) {
+        return klass === currentClass || superclasses.indexOf(klass) !== -1;
+      }
+    };
+
+    this.constructor.call(prototype);
+
+    return prototype;
+  }
+};
 
 module.exports = KindaClass;

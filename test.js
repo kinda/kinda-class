@@ -1,5 +1,3 @@
-"use strict";
-
 var assert = require('chai').assert;
 var KindaClass = require('./');
 
@@ -34,17 +32,17 @@ suite('KindaClass', function() {
         assert.isFunction(bar.isCold);
       });
 
-      test('getName', function() {
-        assert.strictEqual(Foo.getName(), 'Foo');
+      test('get name', function() {
+        assert.strictEqual(Foo.name, 'Foo');
       });
 
-      test('getPrototype', function() {
+      test('get prototype', function() {
         var bar = Bar.instantiate();
-        assert.strictEqual(Bar.getPrototype().isCold, bar.isCold);
+        assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
       test('isKindaClass', function() {
-        assert.ok(Bar.isKindaClass());
+        assert.isTrue(Bar.isKindaClass);
       });
     });
 
@@ -55,33 +53,23 @@ suite('KindaClass', function() {
         assert.isFunction(baz.isCold);
       });
 
-      test('getClass', function() {
+      test('get class', function() {
         var foo = Foo.instantiate();
-        assert.strictEqual(foo.getClass(), Foo);
+        assert.strictEqual(foo.class, Foo);
       });
 
-      test('getClassName', function() {
+      test('get superclasses', function() {
         var foo = Foo.instantiate();
-        assert.strictEqual(foo.getClassName(), 'Foo');
-      });
-
-      test('getSuperclasses', function() {
-        var foo = Foo.instantiate();
-        assert.deepEqual(foo.getSuperclasses(), [KindaClass]);
+        assert.deepEqual(foo.superclasses, [KindaClass]);
         var bar = Bar.instantiate();
-        assert.deepEqual(bar.getSuperclasses(), [Foo, KindaClass]);
+        assert.deepEqual(bar.superclasses, [Foo, KindaClass]);
         var baz = Baz.instantiate();
-        assert.deepEqual(baz.getSuperclasses(), [KindaClass, Bar, Foo]);
+        assert.deepEqual(baz.superclasses, [KindaClass, Bar, Foo]);
       });
 
-      test('getSuperclassNames', function() {
-        var baz = Baz.instantiate();
-        assert.deepEqual(baz.getSuperclassNames(), ['KindaClass', 'Bar', 'Foo']);
-      });
-
-      test('getPrototype', function() {
+      test('get prototype', function() {
         var bar = Bar.instantiate();
-        assert.strictEqual(Bar.getPrototype().isCold, bar.isCold);
+        assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
       test('isInstanceOf', function() {
