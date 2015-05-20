@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var KindaClass = require('./');
+var KindaClass = require('./src');
 
 suite('KindaClass', function() {
   suite('Simple classes hierarchy', function() {
