@@ -1,3 +1,5 @@
+'use strict';
+
 let KindaClass = {
   _name: 'KindaClass',
 
@@ -7,8 +9,8 @@ let KindaClass = {
     if (typeof name !== 'string' || !name) {
       throw new Error('class name is required');
     }
-
-    let parent = this;
+        
+    let parent = this; // eslint-disable-line consistent-this
     let child = {};
 
     // Copy class properties
@@ -24,7 +26,7 @@ let KindaClass = {
     child.constructor = function() {
       this.include(parent);
       if (constructor) constructor.call(this);
-    }
+    };
 
     return child;
   },
@@ -47,7 +49,7 @@ let KindaClass = {
   isKindaClass: true,
 
   constructPrototype() {
-    let currentClass = this;
+    let currentClass = this; // eslint-disable-line consistent-this
     let superclasses = [];
 
     let prototype = {
@@ -64,7 +66,7 @@ let KindaClass = {
       },
 
       include(other) {
-        if (superclasses.indexOf(other) !== -1) return;
+        if (superclasses.indexOf(other) !== -1) return this;
         superclasses.push(other);
         other.constructor.call(this);
         return this;

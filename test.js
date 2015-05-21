@@ -1,22 +1,24 @@
-var assert = require('chai').assert;
-var KindaClass = require('./src');
+'use strict';
+
+let assert = require('chai').assert;
+let KindaClass = require('./src');
 
 suite('KindaClass', function() {
   suite('Simple classes hierarchy', function() {
-    var Foo = KindaClass.extend('Foo', function() {
+    let Foo = KindaClass.extend('Foo', function() {
       this.cool = 'very';
     });
 
     Foo.hello = 'Hello';
     Foo._bye = 'Bye';
 
-    var Bar = Foo.extend('Bar', function() {
+    let Bar = Foo.extend('Bar', function() {
       this.isCold = function() {
         return this.cool === 'very' ? 'yes' : 'no';
       };
     });
 
-    var Baz = KindaClass.extend('Baz', function() {
+    let Baz = KindaClass.extend('Baz', function() {
       this.include(Bar);
     });
 
@@ -27,7 +29,7 @@ suite('KindaClass', function() {
       });
 
       test('instantiate', function() {
-        var bar = Bar.instantiate();
+        let bar = Bar.instantiate();
         assert.strictEqual(bar.cool, 'very');
         assert.isFunction(bar.isCold);
       });
@@ -37,7 +39,7 @@ suite('KindaClass', function() {
       });
 
       test('get prototype', function() {
-        var bar = Bar.instantiate();
+        let bar = Bar.instantiate();
         assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
@@ -48,58 +50,58 @@ suite('KindaClass', function() {
 
     suite('Instance methods', function() {
       test('include', function() {
-        var baz = Baz.instantiate();
+        let baz = Baz.instantiate();
         assert.strictEqual(baz.cool, 'very');
         assert.isFunction(baz.isCold);
       });
 
       test('get class', function() {
-        var foo = Foo.instantiate();
+        let foo = Foo.instantiate();
         assert.strictEqual(foo.class, Foo);
       });
 
       test('get superclasses', function() {
-        var foo = Foo.instantiate();
+        let foo = Foo.instantiate();
         assert.deepEqual(foo.superclasses, [KindaClass]);
-        var bar = Bar.instantiate();
+        let bar = Bar.instantiate();
         assert.deepEqual(bar.superclasses, [Foo, KindaClass]);
-        var baz = Baz.instantiate();
+        let baz = Baz.instantiate();
         assert.deepEqual(baz.superclasses, [KindaClass, Bar, Foo]);
       });
 
       test('get prototype', function() {
-        var bar = Bar.instantiate();
+        let bar = Bar.instantiate();
         assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
       test('isInstanceOf', function() {
-        var foo = Foo.instantiate();
+        let foo = Foo.instantiate();
         assert.ok(foo.isInstanceOf(Foo));
       });
     });
   });
 
   suite('Diamond problem', function() {
-    var count = 0;
+    let count = 0;
 
-    var Top = KindaClass.extend('Top', function() {
+    let Top = KindaClass.extend('Top', function() {
       count++;
     });
 
-    var Left = Top.extend('Left');
+    let Left = Top.extend('Left');
 
-    var Right = Top.extend('Right');
+    let Right = Top.extend('Right');
 
-    var Bottom = Top.extend('Bottom', function() {
+    let Bottom = Top.extend('Bottom', function() {
       this.include(Left);
       this.include(Right);
     });
 
     test('Top constructor should only be called once', function() {
       assert.strictEqual(count, 0);
-      var bottom1 = Bottom.instantiate();
+      Bottom.instantiate();
       assert.strictEqual(count, 1);
-      var bottom2 = Bottom.instantiate();
+      Bottom.instantiate();
       assert.strictEqual(count, 1);
     });
   });
