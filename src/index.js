@@ -9,7 +9,7 @@ let KindaClass = {
     if (typeof name !== 'string' || !name) {
       throw new Error('class name is required');
     }
-        
+
     let parent = this; // eslint-disable-line consistent-this
     let child = {};
 
@@ -43,6 +43,10 @@ let KindaClass = {
   },
 
   instantiate() {
+    return Object.create(this.prototype);
+  },
+
+  create() { // same as instantiate() here but overrided in KindaObject
     return Object.create(this.prototype);
   },
 
