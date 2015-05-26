@@ -46,10 +46,6 @@ let KindaClass = {
     return Object.create(this.prototype);
   },
 
-  create() { // same as instantiate() here but overrided in KindaObject
-    return Object.create(this.prototype);
-  },
-
   isKindaClass: true,
 
   constructPrototype() {

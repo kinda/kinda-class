@@ -28,8 +28,8 @@ suite('KindaClass', function() {
         assert.isUndefined(Bar._bye);
       });
 
-      test('create', function() {
-        let bar = Bar.create();
+      test('instantiate', function() {
+        let bar = Bar.instantiate();
         assert.strictEqual(bar.cool, 'very');
         assert.isFunction(bar.isCold);
       });
@@ -39,7 +39,7 @@ suite('KindaClass', function() {
       });
 
       test('get prototype', function() {
-        let bar = Bar.create();
+        let bar = Bar.instantiate();
         assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
@@ -50,32 +50,32 @@ suite('KindaClass', function() {
 
     suite('Instance methods', function() {
       test('include', function() {
-        let baz = Baz.create();
+        let baz = Baz.instantiate();
         assert.strictEqual(baz.cool, 'very');
         assert.isFunction(baz.isCold);
       });
 
       test('get class', function() {
-        let foo = Foo.create();
+        let foo = Foo.instantiate();
         assert.strictEqual(foo.class, Foo);
       });
 
       test('get superclasses', function() {
-        let foo = Foo.create();
+        let foo = Foo.instantiate();
         assert.deepEqual(foo.superclasses, [KindaClass]);
-        let bar = Bar.create();
+        let bar = Bar.instantiate();
         assert.deepEqual(bar.superclasses, [Foo, KindaClass]);
-        let baz = Baz.create();
+        let baz = Baz.instantiate();
         assert.deepEqual(baz.superclasses, [KindaClass, Bar, Foo]);
       });
 
       test('get prototype', function() {
-        let bar = Bar.create();
+        let bar = Bar.instantiate();
         assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
       test('isInstanceOf', function() {
-        let foo = Foo.create();
+        let foo = Foo.instantiate();
         assert.ok(foo.isInstanceOf(Foo));
       });
     });
@@ -99,9 +99,9 @@ suite('KindaClass', function() {
 
     test('Top constructor should only be called once', function() {
       assert.strictEqual(count, 0);
-      Bottom.create();
+      Bottom.instantiate();
       assert.strictEqual(count, 1);
-      Bottom.create();
+      Bottom.instantiate();
       assert.strictEqual(count, 1);
     });
   });
