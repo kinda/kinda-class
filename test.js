@@ -43,6 +43,16 @@ suite('KindaClass', function() {
         assert.strictEqual(Bar.prototype.isCold, bar.isCold);
       });
 
+      test('isClassOf', function() {
+        let baz = Baz.instantiate();
+        assert.isTrue(Baz.isClassOf(baz));
+        assert.isTrue(Bar.isClassOf(baz));
+        assert.isTrue(Foo.isClassOf(baz));
+        assert.isTrue(KindaClass.isClassOf(baz));
+        let Qux = KindaClass.extend('Qux');
+        assert.isFalse(Qux.isClassOf(baz));
+      });
+
       test('isKindaClass', function() {
         assert.isTrue(Bar.isKindaClass);
       });

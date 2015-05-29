@@ -46,6 +46,10 @@ let KindaClass = {
     return Object.create(this.prototype);
   },
 
+  isClassOf(instance) {
+    return !!(instance && instance.isInstanceOf && instance.isInstanceOf(this));
+  },
+
   isKindaClass: true,
 
   constructPrototype() {
