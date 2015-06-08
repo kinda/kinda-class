@@ -91,6 +91,18 @@ suite('KindaClass', function() {
     });
   });
 
+  suite('Object constructor', function() {
+    test('simple class', function() {
+      let French = KindaClass.extend('French', {
+        hello: 'Bonjour',
+        bye: 'Au revoir'
+      });
+
+      assert.strictEqual(French.prototype.hello, 'Bonjour');
+      assert.strictEqual(French.prototype.bye, 'Au revoir');
+    });
+  });
+
   suite('Diamond problem', function() {
     let count = 0;
 

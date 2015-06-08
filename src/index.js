@@ -25,7 +25,15 @@ let KindaClass = {
 
     child.constructor = function() {
       this.include(parent);
-      if (constructor) constructor.call(this);
+      if (!constructor) return;
+      if (typeof constructor === 'function') {
+        constructor.call(this);
+      } else {
+        let constructorKeys = Object.keys(constructor);
+        for (let key of constructorKeys) {
+          this[key] = constructor[key];
+        }
+      }
     };
 
     return child;
