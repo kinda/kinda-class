@@ -29,9 +29,10 @@ let KindaClass = {
       if (typeof constructor === 'function') {
         constructor.call(this);
       } else {
-        let constructorKeys = Object.keys(constructor);
+        let constructorKeys = Object.getOwnPropertyNames(constructor);
         for (let key of constructorKeys) {
-          this[key] = constructor[key];
+          let descriptor = Object.getOwnPropertyDescriptor(constructor, key);
+          Object.defineProperty(this, key, descriptor);
         }
       }
     };
