@@ -74,9 +74,9 @@ suite('KindaClass', function() {
         let foo = Foo.instantiate();
         assert.deepEqual(foo.superclasses, [KindaClass]);
         let bar = Bar.instantiate();
-        assert.deepEqual(bar.superclasses, [Foo, KindaClass]);
+        assert.deepEqual(bar.superclasses, [KindaClass, Foo]);
         let baz = Baz.instantiate();
-        assert.deepEqual(baz.superclasses, [KindaClass, Bar, Foo]);
+        assert.deepEqual(baz.superclasses, [KindaClass, Foo, Bar]);
       });
 
       test('get prototype', function() {
@@ -100,6 +100,31 @@ suite('KindaClass', function() {
 
       assert.strictEqual(French.prototype.hello, 'Bonjour');
       assert.strictEqual(French.prototype.bye, 'Au revoir');
+    });
+  });
+
+  suite('Name conflict', function() {
+    test('extend a class with the same name', function() {
+      let Person = KindaClass.extend('Person', function() {
+        this.isNice = 'yes';
+        this.isCool = 'yes';
+      });
+
+      Person = Person.extend('Person', function() {
+        this.isCool = 'absolutely';
+      });
+
+      let person = Person.instantiate();
+      assert.strictEqual(person.isNice, 'yes');
+      assert.strictEqual(person.isCool, 'absolutely');
+
+      Person = Person.extend('Person', function() {
+        this.isCool = 'definitely';
+      });
+
+      person = Person.instantiate();
+      assert.strictEqual(person.isNice, 'yes');
+      assert.strictEqual(person.isCool, 'definitely');
     });
   });
 

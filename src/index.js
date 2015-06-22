@@ -78,9 +78,13 @@ let KindaClass = {
       },
 
       include(other) {
-        if (superclasses.indexOf(other) !== -1) return this;
-        superclasses.push(other);
+        // if (superclasses.indexOf(other) !== -1) return this;
+        let isAlreadyIncluded = superclasses.some(klass => {
+          return klass.name === other.name;
+        });
+        if (isAlreadyIncluded) return this;
         other.constructor.call(this);
+        superclasses.push(other);
         return this;
       },
 
