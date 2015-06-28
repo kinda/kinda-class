@@ -12,7 +12,7 @@
     "release-patch": "npm run release --release-type=patch",
     "release-minor": "npm run release --release-type=minor",
     "release-major": "npm run release --release-type=major",
-    "test": "mocha --compilers js:babel/register --ui tdd src"
+    "test": "mocha --compilers js:babel/register --ui tdd"
   },
   "license": "MIT",
   "devDependencies": {

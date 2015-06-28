@@ -1,2 +1,5 @@
 # ES6 source directory
 src
+
+# Tests
+test.js
