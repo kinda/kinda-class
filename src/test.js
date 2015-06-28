@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('chai').assert;
-let KindaClass = require('./src');
+let KindaClass = require('./');
 
 suite('KindaClass', function() {
   suite('Simple classes hierarchy', function() {
