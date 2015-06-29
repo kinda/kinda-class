@@ -86,7 +86,8 @@ suite('KindaClass', function() {
 
       test('isInstanceOf', function() {
         let foo = Foo.instantiate();
-        assert.ok(foo.isInstanceOf(Foo));
+        assert.isTrue(foo.isInstanceOf(Foo));
+        assert.isFalse(foo.isInstanceOf(Bar));
       });
     });
   });

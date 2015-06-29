@@ -90,7 +90,9 @@ let KindaClass = {
       },
 
       isInstanceOf(klass) {
-        return klass === currentClass || superclasses.indexOf(klass) !== -1;
+        // return klass === currentClass || superclasses.indexOf(klass) !== -1;
+        if (currentClass.name === klass.name) return true;
+        return superclasses.some(superclass => superclass.name === klass.name);
       }
     };
 
