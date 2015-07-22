@@ -5,13 +5,23 @@ let KindaClass = {
 
   constructor() {},
 
-  extend(name, constructor) {
-    if (typeof name !== 'string' || !name) {
-      throw new Error('class name is required');
+  extend(name, version, constructor) {
+    if (typeof name !== 'string') {
+      constructor = version;
+      version = name;
+      name = 'Sub' + this._name;
     }
 
-    let parent = this; // eslint-disable-line consistent-this
-    let child = {};
+    if (typeof version !== 'string') {
+      constructor = version;
+      version = undefined;
+    }
+
+    let parent = this;
+    let child = {
+      _name: name,
+      _version: version
+    };
 
     // Copy class properties
     let keys = Object.getOwnPropertyNames(parent);
@@ -20,8 +30,6 @@ let KindaClass = {
       let descriptor = Object.getOwnPropertyDescriptor(parent, key);
       Object.defineProperty(child, key, descriptor);
     }
-
-    child._name = name;
 
     child.constructor = function() {
       this.include(parent);
@@ -42,6 +50,10 @@ let KindaClass = {
 
   get name() {
     return this._name;
+  },
+
+  get version() {
+    return this._version;
   },
 
   get prototype() {

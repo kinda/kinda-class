@@ -22,6 +22,8 @@ suite('KindaClass', function() {
       this.include(Bar);
     });
 
+    let UnnamedClass = Foo.extend();
+
     suite('Class methods', function() {
       test('extend', function() {
         assert.strictEqual(Bar.hello, 'Hello');
@@ -36,6 +38,7 @@ suite('KindaClass', function() {
 
       test('get name', function() {
         assert.strictEqual(Foo.name, 'Foo');
+        assert.strictEqual(UnnamedClass.name, 'SubFoo');
       });
 
       test('get prototype', function() {
@@ -145,12 +148,24 @@ suite('KindaClass', function() {
       this.include(Right);
     });
 
-    test('Top constructor should only be called once', function() {
+    test('top constructor should only be called once', function() {
       assert.strictEqual(count, 0);
       Bottom.instantiate();
       assert.strictEqual(count, 1);
       Bottom.instantiate();
       assert.strictEqual(count, 1);
+    });
+  });
+
+  suite('Versioning', function() {
+    test('class without a version number', function() {
+      let Klass = KindaClass.extend('Klass');
+      assert.isUndefined(Klass.version);
+    });
+
+    test('class with a version number', function() {
+      let Klass = KindaClass.extend('Klass', '0.1.0');
+      assert.strictEqual(Klass.version, '0.1.0');
     });
   });
 });
