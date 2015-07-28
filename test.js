@@ -158,14 +158,72 @@ suite('KindaClass', function() {
   });
 
   suite('Versioning', function() {
-    test('class without a version number', function() {
-      let Klass = KindaClass.extend('Klass');
-      assert.isUndefined(Klass.version);
+    test('get version number', function() {
+      let A = KindaClass.extend('A');
+      assert.isUndefined(A.version);
+      let B = KindaClass.extend('B', '0.1.0');
+      assert.strictEqual(B.version, '0.1.0');
     });
 
-    test('class with a version number', function() {
-      let Klass = KindaClass.extend('Klass', '0.1.0');
-      assert.strictEqual(Klass.version, '0.1.0');
+    test('isInstanceOf', function() {
+      let A010 = KindaClass.extend('A', '0.1.0');
+      assert.isTrue(A010.prototype.isInstanceOf(A010));
+
+      let A015 = KindaClass.extend('A', '0.1.5');
+      assert.isTrue(A010.prototype.isInstanceOf(A015));
+      assert.isFalse(A015.prototype.isInstanceOf(A010));
+
+      let B015 = KindaClass.extend('B', '0.1.5');
+      assert.isFalse(A010.prototype.isInstanceOf(B015));
+
+      let A024 = KindaClass.extend('A', '0.2.4');
+      assert.isFalse(A015.prototype.isInstanceOf(A024));
+      assert.isFalse(A024.prototype.isInstanceOf(A015));
+
+      let A117 = KindaClass.extend('A', '1.1.7');
+      let A141 = KindaClass.extend('A', '1.4.1');
+      assert.isTrue(A117.prototype.isInstanceOf(A141));
+      assert.isFalse(A141.prototype.isInstanceOf(A117));
+
+      let A202 = KindaClass.extend('A', '2.0.2');
+      assert.isFalse(A117.prototype.isInstanceOf(A202));
+      assert.isFalse(A202.prototype.isInstanceOf(A117));
+    });
+
+    test('include', function() {
+      let a010Constructed, a015Constructed;
+      let A010 = KindaClass.extend('A', '0.1.0', function() {
+        a010Constructed = true;
+      });
+      let A015 = KindaClass.extend('A', '0.1.5', function() {
+        a015Constructed = true;
+      });
+      let A020 = KindaClass.extend('A', '0.2.0');
+
+      a010Constructed = false;
+      a015Constructed = false;
+      (KindaClass.extend(function() {
+        this.include(A010);
+        this.include(A015);
+      })).instantiate();
+      assert.isTrue(a010Constructed);
+      assert.isTrue(a015Constructed);
+
+      a010Constructed = false;
+      a015Constructed = false;
+      (KindaClass.extend(function() {
+        this.include(A015);
+        this.include(A010);
+      })).instantiate();
+      assert.isTrue(a015Constructed);
+      assert.isFalse(a010Constructed);
+
+      assert.throws(function() {
+        (KindaClass.extend(function() {
+          this.include(A015);
+          this.include(A020);
+        })).instantiate();
+      });
     });
   });
 });

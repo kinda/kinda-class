@@ -1,5 +1,7 @@
 'use strict';
 
+let semver = require('semver');
+
 let KindaClass = {
   _name: 'KindaClass',
 
@@ -77,6 +79,25 @@ let KindaClass = {
     let currentClass = this; // eslint-disable-line consistent-this
     let superclasses = [];
 
+    let checkCompatibility = function(v1, v2) {
+      if (semver.satisfies(v1, '^' + v2)) return true;
+      if (semver.satisfies(v2, '^' + v1)) return true;
+      return false;
+    };
+
+    let compareClasses = function(a, b, errorIfNotCompatible) {
+      if (a.name !== b.name) return false;
+      if (!a.version || !b.version) return true;
+      if (!checkCompatibility(a.version, b.version)) {
+        if (errorIfNotCompatible) {
+          throw new Error(`class ${a.name} v${a.version} is not compatible with class ${b.name} v${b.version}`);
+        }
+        return false;
+      }
+      if (semver.lte(a.version, b.version)) return true;
+      return false;
+    };
+
     let prototype = {
       get class() {
         return currentClass;
@@ -91,20 +112,21 @@ let KindaClass = {
       },
 
       include(other) {
-        // if (superclasses.indexOf(other) !== -1) return this;
-        let isAlreadyIncluded = superclasses.some(klass => {
-          return klass.name === other.name;
+        let isAlreadyIncluded = this.superclasses.some(superclass => {
+          return compareClasses(other, superclass, true);
         });
         if (isAlreadyIncluded) return this;
         other.constructor.call(this);
-        superclasses.push(other);
+        this.superclasses.push(other);
         return this;
       },
 
-      isInstanceOf(klass) {
-        // return klass === currentClass || superclasses.indexOf(klass) !== -1;
-        if (currentClass.name === klass.name) return true;
-        return superclasses.some(superclass => superclass.name === klass.name);
+      isInstanceOf(other) {
+        if (!(other && other.isKindaClass)) return false;
+        if (compareClasses(this.class, other)) return true;
+        return this.superclasses.some(superclass => {
+          return compareClasses(superclass, other);
+        });
       }
     };
 
