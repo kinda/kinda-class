@@ -1,7 +1,3 @@
-# kinda-class [![Build Status](https://travis-ci.org/kinda/kinda-class.svg?branch=master)](https://travis-ci.org/kinda/kinda-class)
+# kinda-class
 
-Simple and powerful dynamic object system.
-
-```js
-// TODO: documentation!
-```
+This project is deprecated.
